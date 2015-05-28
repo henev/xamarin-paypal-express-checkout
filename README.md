@@ -24,5 +24,7 @@ For now the best way to use this project is to change the code in it according t
 Important classes are:
 
 * Config - where it is essential to change the client id and the secret. Return and cancel url must be always different, but it doesn't matter really what websites they are targeting. The user never gets to those websites. He is always redirected to the preveous or next view before that.
+
 * PayPalApiClient - Here are all the API calls to PayPal. It implements an interface that is placed in the PCL project. This class exists in a linked file that both the iOS and Android project have. I use dependency injection thanks to [Xlabs IOC](https://github.com/XLabs/Xamarin-Forms-Labs/wiki/IOC) so that I can call PayPalApiClient's methods in the PCL. This is done because [RestSharp](https://components.xamarin.com/view/restsharp/) component can't be installed in the PCL and we use [RestSharp as REST client for consuming HTTP APIs](https://components.xamarin.com/view/restsharp/).
+
 * PayPalWebView - is used as a webview, where we load the url provided by PayPal for the user to login, review and confirm the order so that the transaction can finish.
