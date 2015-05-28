@@ -4,23 +4,24 @@ using System.Collections.Generic;
 namespace PayPalExpressCheckout
 {
 	public class PayPalPaymentResponse {
-//		public string id { get; set; }
-//		public string create_time { get; set; }
-//		public string update_time { get; set; }
-//		public string state { get; set; }
-//		public string intent { get; set; }
+		
+//		public string Id { get; set; }
+//		public string CreatedTime { get; set; }
+//		public string UpdatedTime { get; set; }
+//		public string State { get; set; }
+//		public string Intent { get; set; }
 //
-//		public PayPalPayer payer { get; set; }
-//		public List<PayPalTransaction> transactions { get; set; }
-		public List<PayPalPaymentLinksResponse> links { get; set; }
+//		public PayPalPayer Payer { get; set; }
+//		public List<PayPalTransaction> Transaction { get; set; }
+		public List<PayPalPaymentLinksResponse> Links { get; set; }
 
 		public string DisplayError { get; set; }
 	}
 
 	public class PayPalPaymentLinksResponse {
-		public string href { get; set; }
-		public string rel { get; set; }
-		public string method { get; set; }
+		public string Href { get; set; }
+		public string Rel { get; set; }
+		public string Method { get; set; }
 	}
 }
 

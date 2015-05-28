@@ -1,1 +1,17 @@
-﻿<Properties StartupItem="iOS/PayPalExpressCheckout.iOS.csproj" />
+﻿<Properties StartupItem="iOS/PayPalExpressCheckout.iOS.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.IPhone5.8.2" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="PayPalExpressCheckout/Pages/MainPage.cs">
+    <Files>
+      <File FileName="PayPalExpressCheckout/Pages/MainPage.cs" Line="44" Column="55" />
+      <File FileName="LinkedFiles/PayPalApiClient.cs" Line="1" Column="1" />
+      <File FileName="PayPalExpressCheckout/Pages/PayPalWebView.cs" Line="1" Column="1" />
+      <File FileName="PayPalExpressCheckout/PayPalExpressCheckout.cs" Line="1" Column="1" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore>
+      <Breakpoint file="/Users/office/Developer/Xamarin/PayPalExpressCheckout/LinkedFiles/PayPalApiClient.cs" line="97" column="1" />
+    </BreakpointStore>
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

@@ -12,3 +12,13 @@
 /Users/office/Developer/Xamarin/PayPalExpressCheckout/PayPalExpressCheckout/bin/Debug/XLabs.Platform.dll
 /Users/office/Developer/Xamarin/PayPalExpressCheckout/PayPalExpressCheckout/bin/Debug/XLabs.Serialization.dll
 /Users/office/Developer/Xamarin/PayPalExpressCheckout/PayPalExpressCheckout/bin/Debug/XLabs.Forms.dll
+/Users/office/Developer/Xamarin/PayPalExpressCheckout/PayPalExpressCheckout/bin/Debug/mscorlib.dll
+/Users/office/Developer/Xamarin/PayPalExpressCheckout/PayPalExpressCheckout/bin/Debug/System.Core.dll
+/Users/office/Developer/Xamarin/PayPalExpressCheckout/PayPalExpressCheckout/bin/Debug/System.dll
+/Users/office/Developer/Xamarin/PayPalExpressCheckout/PayPalExpressCheckout/bin/Debug/System.Linq.Queryable.dll
+/Users/office/Developer/Xamarin/PayPalExpressCheckout/PayPalExpressCheckout/bin/Debug/System.Diagnostics.Tools.dll
+/Users/office/Developer/Xamarin/PayPalExpressCheckout/PayPalExpressCheckout/bin/Debug/System.ComponentModel.EventBasedAsync.dll
+/Users/office/Developer/Xamarin/PayPalExpressCheckout/PayPalExpressCheckout/bin/Debug/System.Net.Primitives.dll
+/Users/office/Developer/Xamarin/PayPalExpressCheckout/PayPalExpressCheckout/bin/Debug/System.Net.Requests.dll
+/Users/office/Developer/Xamarin/PayPalExpressCheckout/PayPalExpressCheckout/bin/Debug/System.Net.NetworkInformation.dll
+/Users/office/Developer/Xamarin/PayPalExpressCheckout/PayPalExpressCheckout/bin/Debug/System.Text.RegularExpressions.dll

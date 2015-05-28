@@ -9,7 +9,7 @@ namespace PayPalExpressCheckout
 		public string currency { get; set; }
 //		public string sku { get; set; }
 		public string description { get; set; }
-//		public string tax { get; set; }
+		public string tax { get; set; }
 	}
 }
 

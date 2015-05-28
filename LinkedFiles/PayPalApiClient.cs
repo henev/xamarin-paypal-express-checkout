@@ -5,33 +5,27 @@ using System.Net;
 using System.Diagnostics;
 using System.Linq;
 
-namespace PayPalExpressCheckout
-{
-	public class PayPalApiClient : IPayPalApiClient
-	{
-		private RestClient restClient { get; set; }
+namespace PayPalExpressCheckout {
+
+	public class PayPalApiClient : IPayPalApiClient {
+		
+		RestClient restClient { get; set; }
 
 		// constructor
-		public PayPalApiClient () {
-			restClient = new RestClient ("https://api.sandbox.paypal.com/v1");
+		public PayPalApiClient() {
+			restClient = new RestClient (Config.ApiUrl);
 		}
 
-		// MAKE CALLS ASYNC
-
 		// Get access (bearer) token from paypal
-		public async Task<PayPalGetTokenResponse> GetAccessToken () {
+		public async Task<PayPalGetTokenResponse> GetAccessToken() {
 			var restRequest = new RestRequest ("/oauth2/token", Method.POST);
 
 			// Add headers
 			restRequest.AddHeader ("Accept", "application/json");
 			restRequest.AddHeader ("Accept-Language", "en_US");
 
-			// Application credentials
-			string clientId = "ASpkpVUsuaE73F-3glCVNVZO31eJgWPmv0DFDUoPAozHy9qPX_HKQQ_igzvLHFe7Vz5pvr66VNItscFy";
-			string secret = "EIuzZ70XfeTS_YXvoMDpu86QyrW0QtxwM6s8NvoTdVdPUL3ToimgPdiMrDTrQvCTuNewvLKhS0mwaAHU";
-
 			// Make Authorization header
-			restClient.Authenticator = new HttpBasicAuthenticator(clientId, secret);
+			restClient.Authenticator = new HttpBasicAuthenticator(Config.ApiClientId, Config.ApiSecret);
 
 			// add data to send
 			restRequest.AddParameter ("grant_type", "client_credentials");
@@ -45,46 +39,51 @@ namespace PayPalExpressCheckout
 
 		// Make a payment
 		// Should do validation of the returned data
-		public async Task<PayPalExecutePaymentResult> MakePayment (string returnUrl, 
-			string cancelUrl, 
-			string totalPrice, 
-			string priceCurrency) {
+		public async Task<PayPalExecutePaymentResult> MakePayment() {
 
 			var accessTokenData = await GetAccessToken();
-			var executePaymentResult = new PayPalExecutePaymentResult ();
+			var executePaymentResult = new PayPalExecutePaymentResult();
 
 			if (accessTokenData.DisplayError == null) {
 				var restRequest = new RestRequest ("/payments/payment", Method.POST);
 
 				// Add headers
 				restRequest.AddHeader ("Content-Type", "application/json");
-				restRequest.AddHeader ("Authorization", "Bearer " + accessTokenData.access_token);
+				restRequest.AddHeader ("Authorization", "Bearer " + accessTokenData.AccessToken);
 
 				// Add data to send
 				restRequest.RequestFormat = DataFormat.Json;
-				restRequest.AddBody (new PayPalMakePaymentData() {
+				// This transaction information should be made dynamic!
+				// Source: https://developer.paypal.com/docs/api/#create-a-payment
+				restRequest.AddBody (new PayPalMakePaymentData {
 					intent = "sale",
-					redirect_urls = new PayPalMakePaymentRedirectUrls() {
-						return_url = returnUrl,
-						cancel_url = cancelUrl
+					redirect_urls = new PayPalMakePaymentRedirectUrls {
+						return_url = Config.ReturnUrl,
+						cancel_url = Config.CancelUrl
 					},
-					payer = new PayPalPayer() {
+					payer = new PayPalPayer {
 						payment_method = "paypal"
 					},
 					transactions = new [] {
-						new PayPalTransaction() {
-							amount = new PayPalAmount() {
-								total = totalPrice,
-								currency = priceCurrency
+						new PayPalTransaction {
+							amount = new PayPalAmount {
+								total = "50",
+								currency = "USD",
+								details = new PayPalAmountDetails {
+									subtotal = "40",
+									tax = "5",
+									shipping = "5"
+								}
 							},
-							item_list = new PayPalItemList() {
+							item_list = new PayPalItemList {
 								items = new [] {
-									new PayPalItem() {
+									new PayPalItem {
 										quantity = "1",
 										name = "Booking reservation",
-										price = "50.00",
+										price = "40",
 										currency = "USD",
-										description = "Booking reservation at ABC hotel at 24/03/2015 from 1pm to 4pm."
+										description = "Booking reservation at ABC hotel at 24/03/2015 from 1pm to 4pm.",
+										tax = "5"
 									}
 								}
 							}
@@ -98,13 +97,13 @@ namespace PayPalExpressCheckout
 
 				if (executePaymentResult.DisplayError == null) {
 					// Get the approval url from the links provided by the response
-					var links = from link in response.Data.links
-								where link.rel == "approval_url"
-								select link.href;
+					var links = from link in response.Data.Links
+								where link.Rel == "approval_url"
+								select link.Href;
 
-					if (!String.IsNullOrEmpty(links.First())) {
+					if ( !String.IsNullOrEmpty(links.First()) ) {
 						executePaymentResult.Url = links.First ();
-						executePaymentResult.AccessToken = accessTokenData.access_token;
+						executePaymentResult.AccessToken = accessTokenData.AccessToken;
 
 						// Send the approval url along with the access token the paypal webview
 						return executePaymentResult;
@@ -138,7 +137,7 @@ namespace PayPalExpressCheckout
 			return CheckResponseStatus (response, HttpStatusCode.OK);
 		}
 
-		private string CheckResponseStatus(IRestResponse response, HttpStatusCode validStatusCode) {
+		string CheckResponseStatus(IRestResponse response, HttpStatusCode validStatusCode) {
 			if (response.ResponseStatus == ResponseStatus.Completed) {
 				if (response.StatusCode != validStatusCode) {
 					// something went wrong
@@ -147,6 +146,7 @@ namespace PayPalExpressCheckout
 					return "Something went wrong. Please try again.";
 				} else {
 
+					// everythings fine
 					return null;
 				}
 			} else {
