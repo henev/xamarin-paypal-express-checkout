@@ -1,4 +1,4 @@
-[OLD] Xamarin PayPal Express Checkout
+[LEGACY] Xamarin PayPal Express Checkout
 ============
 
 About
